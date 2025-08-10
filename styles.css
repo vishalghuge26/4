@@ -1,11 +1,186 @@
-body {
-    margin: 0;
-    background: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+/* Clean, responsive layout and flat-cartoon aesthetics */
+:root{
+  --bg:#7ec850; /* grass */
+  --road:#2b2b2b;
+  --accent:#ffd166;
+  --blue:#6ecff6;
+  --muted:#f0f0f0;
+  --ui-bg: rgba(255,255,255,0.08);
+  --font: 'Helvetica Neue', Arial, sans-serif;
 }
-canvas {
-    display: block;
+
+html,body {
+  height:100%;
+  margin:0;
+  background: linear-gradient(#9be77a,#7ec850);
+  font-family:var(--font);
+  -webkit-tap-highlight-color: transparent;
+}
+
+#game-wrap {
+  position:relative;
+  max-width:900px;
+  margin: 14px auto;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  background:var(--muted);
+}
+
+/* The canvas will be injected into #game-container */
+#game-container {
+  width:100%;
+  aspect-ratio: 2/3; /* portrait-ish default; Phaser will scale */
+  background: transparent;
+}
+
+/* Top UI */
+#ui-top{
+  position:absolute;
+  top:8px;
+  left:12px;
+  right:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  pointer-events:none;
+  z-index:40;
+}
+#ui-top > * { pointer-events:auto; }
+
+#score, #highscore{
+  background:var(--ui-bg);
+  color:#fff;
+  padding:.45rem .7rem;
+  border-radius:8px;
+  font-weight:700;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15) inset;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+
+/* Mute button */
+#mute-btn{
+  background:var(--ui-bg);
+  border:0;
+  color:#fff;
+  padding:.45rem .6rem;
+  border-radius:8px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* Mobile controls: big flat triangles */
+#mobile-controls{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 28px;
+  z-index:40;
+  pointer-events:none;
+}
+#mobile-controls button{
+  pointer-events:auto;
+  width:20vw;
+  max-width:120px;
+  height:20vw;
+  max-height:120px;
+  border-radius:14px;
+  border:0;
+  background:transparent;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+}
+
+/* triangular shapes built with CSS */
+.tri {
+  width:0;
+  height:0;
+}
+.tri.left {
+  border-top: 28px solid transparent;
+  border-bottom: 28px solid transparent;
+  border-right: 44px solid #ffd54a; /* yellow */
+  transform: scale(1.6);
+}
+.tri.right {
+  border-top: 28px solid transparent;
+  border-bottom: 28px solid transparent;
+  border-left: 44px solid #4fb3ff; /* blue */
+  transform: scale(1.6);
+}
+
+/* Overlays (preload and game over) */
+.overlay {
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.55));
+  z-index:50;
+}
+
+.loader {
+  width:70%;
+  max-width:420px;
+  text-align:center;
+  color:#fff;
+}
+
+#progress-bar {
+  width:100%;
+  height:16px;
+  background: rgba(255,255,255,0.12);
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:8px;
+}
+#progress-fill {
+  width:0%;
+  height:100%;
+  background: linear-gradient(90deg,#ffd54a,#ffd166);
+  transition: width .2s linear;
+}
+
+#progress-text {
+  font-size:14px;
+  color:#fff;
+}
+
+/* Game over card */
+.hidden { display:none; }
+.game-over-card{
+  background: #fff;
+  padding:22px;
+  border-radius:12px;
+  text-align:center;
+  min-width:220px;
+}
+.game-over-card h2{ margin:0 0 12px 0; color:#333; }
+.game-over-card p{ margin: 0 0 14px 0; font-weight:700; color:#444; }
+.game-over-card button{
+  background:#ff6b6b;
+  color:#fff;
+  border:0;
+  padding:.6rem 1rem;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* Responsive tweaks */
+@media (min-width:900px){
+  #game-container { aspect-ratio: 16/9; }
+  #mobile-controls { display:none; } /* hide mobile controls on wide screens */
+}
+
+/* small screens tweaks */
+@media (max-width:480px){
+  #ui-top { padding: 6px; top:6px; }
+  .tri { transform: scale(1.4); }
 }

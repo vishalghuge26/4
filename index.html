@@ -1,13 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Car Dodger Game</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
-    <script src="main.js" defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>4-Lane Car Dodger — Phaser 3</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Phaser 3 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
 </head>
 <body>
+  <div id="game-wrap">
+    <div id="preload-overlay" class="overlay">
+      <div class="loader">
+        <div id="progress-bar"><div id="progress-fill"></div></div>
+        <div id="progress-text">Loading... 0%</div>
+      </div>
+    </div>
+
+    <div id="ui-top">
+      <div id="score">Score: 0</div>
+      <div id="highscore">High: 0</div>
+      <button id="mute-btn" title="Mute / Unmute">🔊</button>
+    </div>
+
     <div id="game-container"></div>
+
+    <div id="mobile-controls">
+      <button id="left-btn" class="tri left" aria-label="Left"></button>
+      <button id="right-btn" class="tri right" aria-label="Right"></button>
+    </div>
+
+    <div id="game-over" class="overlay hidden">
+      <div class="game-over-card">
+        <h2>Game Over</h2>
+        <p id="final-score">Score: 0</p>
+        <button id="restart-btn">Restart</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
